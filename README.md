@@ -1,58 +1,64 @@
-# Building a Machine Learning Workflow for Scones Unlimited with Amazon SageMaker
+#  Machine Learning Workflow for Scones Unlimited with AWS SageMaker
 
 ## Project Overview
 
 ### Step 1: Data Staging
 
-**Objective:** Extract the CIFAR-100 dataset, transform it, and load it into Amazon S3.
+**Objective:** Extract, transform, and load the CIFAR-100 dataset into Amazon S3.
 
 **Execution:**
-1. Defined `extract_cifar_data` function in the notebook to download and extract CIFAR-100 dataset from the provided URL.
+1. Defined extract_cifar_data function in the notebook to download and extract the CIFAR-100 dataset from the provided URL.
 2. Used tarfile to decompress the dataset and explore its structure.
-3. Identified bicycles and motorcycles labels in the dataset.
-4. Filtered the dataset for bicycles (label 8) and motorcycles (label 48).
-5. Saved the images into the `./train` and `./test` directories.
+3.Identified labels for bicycles and motorcycles in the dataset.
+4.Filtered the dataset for bicycles (label 8) and motorcycles (label 48).
+5.Saved the filtered images into the ./train and ./test directories.
 
 ### Step 2: Model Training and Deployment
 
 **Objective:** Train an image classification model using AWS SageMaker, deploy the model, and set up monitoring.
 
 **Execution:**
-1. Generated metadata files (`train.lst` and `test.lst`) for training and testing datasets.
-2. Uploaded metadata files to S3.
-3. Retrieved the latest image-classification container URI using the SageMaker SDK.
-4. Configured and created a SageMaker estimator with ml.p3.2xlarge instance.
-5. Set hyperparameters, defined model inputs, and initiated model training.
-6. Deployed the model with data capture configured for monitoring.
-7. Tested the deployed model with sample images.
+Generated metadata files (train.lst and test.lst) for the training and testing datasets.
+
+Uploaded metadata files to S3.
+
+Retrieved the latest image-classification container URI using the SageMaker SDK.
+
+Configured and created a SageMaker estimator with an ml.p3.2xlarge instance.
+
+Set hyperparameters, defined model inputs, and initiated model training.
+
+Deployed the model with data capture configured for monitoring.
+
+Tested the deployed model with sample images.
 
 ### Step 3: Lambdas and Step Function Workflow
 
 **Objective:** Create Lambda functions for data generation, image classification, and inference filtering. Design a Step Function workflow to orchestrate these functions.
 
 **Execution:**
-1. Created three Lambda functions: `serializeImageData`, `classifyImage`, and `filterInferences`.
-2. Deployed each Lambda function with appropriate permissions.
-3. Constructed a Step Function using the visual editor, chaining Lambda invocations.
-4. Removed error handling from the last Lambda function for explicit failure.
+Created three Lambda functions: serializeImageData, classifyImage, and filterInferences.
+Deployed each Lambda function with appropriate permissions.
+Constructed a Step Function using the visual editor, chaining Lambda invocations.
+Removed error handling from the last Lambda function for explicit failure handling.
 
 ### Step 4: Testing and Evaluation
 
 **Objective:** Test the Step Function with the test dataset, evaluate results, and monitor model performance.
 
 **Execution:**
-1. Generated test cases using the provided `generate_test_case` function.
-2. Executed multiple invocations of the Step Function with generated test cases.
-3. Extracted and visualized captured data from SageMaker Model Monitor for evaluation.
-4. Checked the inferences against a defined confidence threshold.
+Generated test cases using the provided generate_test_case function.
+Executed multiple invocations of the Step Function with the generated test cases.
+Extracted and visualized captured data from SageMaker Model Monitor for evaluation.
+Checked the inferences against a defined confidence threshold.
 
 ### Step 5: Cleanup Cloud Resources
 
 **Objective:** Clean up all resources to avoid ongoing costs.
 
 **Execution:**
-1. Deleted endpoints, models, and instances used in training and inference.
-2. Ensured all associated resources were removed to prevent any unintended charges.
+1.Deleted endpoints, models, and instances used in training and inference.
+Ensured all associated resources were removed to prevent any unintended charges.
 
 ## Additional Files
 
@@ -72,7 +78,7 @@
 
 ## Building a State Machine via AWS Step Functions
 * Step Function Graph (that met the inference threshold)
-![grapgh](screenshots/Stepfgraph1..png)
+![grapgh](Stepfgraph1..png)
 
 * Step Function Graph (that did not meet the inference threshold)
-  !![grapgh](screenshots/Stepfgraph2..png)
+  !![grapgh](Stepfgraph2..png)
