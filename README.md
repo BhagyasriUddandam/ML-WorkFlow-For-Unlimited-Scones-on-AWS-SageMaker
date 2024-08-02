@@ -76,9 +76,3 @@ Ensured all associated resources were removed to prevent any unintended charges.
 
 **Note:** Ensure proper configurations, permissions, and dependencies are set up as outlined in the notebook. Adjustments may be needed based on specific AWS account settings.
 
-## Building a State Machine via AWS Step Functions
-* Step Function Graph (that met the inference threshold)
-![grapgh](Stepfgraph1..png)
-
-* Step Function Graph (that did not meet the inference threshold)
-  !![grapgh](Stepfgraph2..png)
